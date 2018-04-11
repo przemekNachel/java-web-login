@@ -8,7 +8,8 @@ public class Login implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        String response = "Hello";
+        String response = "Hello ";
+        response += new Session("Przemek").getSessionId();
 //        String method = httpExchange.getRequestMethod();
 //        if(method.equals("POST")) {
 //            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
