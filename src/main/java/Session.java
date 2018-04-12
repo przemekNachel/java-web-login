@@ -21,7 +21,7 @@ public class Session {
         this.sessionId = generateSessionId();
         this.userName = userName;
         this.createDate = LocalDateTime.now();
-        this.expireDate = createDate.plusMinutes(3);
+        this.expireDate = createDate.plusMinutes(30);
         this.lastAccessDate = createDate;
     }
 
