@@ -12,17 +12,22 @@ import java.util.Map;
 public class Login implements HttpHandler {
 
     private SessionDao sessionDao;
+    private UserDao userDao;
     private HttpExchange httpExchange;
     private String requestMethod;
     private Map<String, String> formData;
     private String response;
     private Session session;
     private HttpCookie cookie;
+    private boolean logged;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
+        this.logged = false;
         this.sessionDao = new SessionDao();
+        this.userDao = new UserDao();
+
         this.httpExchange = httpExchange;
         this.requestMethod = httpExchange.getRequestMethod();
 
@@ -38,8 +43,8 @@ public class Login implements HttpHandler {
         if (requestMethod.equals("POST")) {
             getFormData();
             tryLogin();
-            if (sessionUnexpired()) {
-                response = "Hello " + session.getUserName() + " Your session ID: " + session.getSessionId();
+            if (logged) {
+                response = "<script language=\"JavaScript\" type=\"text/javascript\">location.href=\"/\"</script>";
             }
         } else if (requestMethod.equals("GET")) {
             if (sessionUnexpired()) {
@@ -53,15 +58,12 @@ public class Login implements HttpHandler {
 
 
     private void tryLogin() throws SQLException {
-        String correctUsername = "tadek";
-        String correctPassword = "przemek";
-
         String username = formData.get("username");
-
-        if (username.equals(correctUsername) && formData.get("password").equals(correctPassword)) {
+        if (userDao.getUserByUsername(username, formData.get("password")) != null) {
             session = new Session(username);
             setCookie();
             sessionDao.addSession(session);
+            logged = true;
         } else {
             response = getForm() + "Bad username or password";
         }
