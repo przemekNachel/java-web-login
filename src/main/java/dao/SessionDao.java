@@ -1,4 +1,7 @@
-import java.sql.SQLDataException;
+package dao;
+
+import model.Session;
+
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

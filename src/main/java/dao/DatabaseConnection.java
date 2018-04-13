@@ -1,3 +1,5 @@
+package dao;
+
 import java.sql.*;
 
 public class DatabaseConnection
@@ -12,7 +14,7 @@ public class DatabaseConnection
         getConnectionToDatabase();
     }
 
-    public static DatabaseConnection getInstance()
+    static DatabaseConnection getInstance()
     {
         if (instance == null) {
             instance = new DatabaseConnection();
@@ -33,7 +35,7 @@ public class DatabaseConnection
         }
     }
 
-    public Connection getConnection()
+    Connection getConnection()
     {
         return this.connection;
     }

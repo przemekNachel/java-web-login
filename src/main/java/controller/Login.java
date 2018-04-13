@@ -1,5 +1,8 @@
+package controller;
+
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import view.getHtml;
 
 import java.io.*;
 import java.net.HttpCookie;
@@ -8,6 +11,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import dao.*;
+import model.*;
 
 public class Login implements HttpHandler {
 
@@ -28,7 +33,7 @@ public class Login implements HttpHandler {
         this.logged = false;
         this.sessionDao = new SessionDao();
         this.userDao = new UserDao();
-
+        this.cookie = null;
         this.httpExchange = httpExchange;
         this.requestMethod = httpExchange.getRequestMethod();
 
@@ -87,10 +92,7 @@ public class Login implements HttpHandler {
         if (cookie != null) {
             session = sessionDao.getSessionById(cookie.getValue());
         }
-        if (session != null && session.getExpireDate().isAfter(LocalDateTime.now())) {
-            return true;
-        }
-        return false;
+        return session != null && session.getExpireDate().isAfter(LocalDateTime.now());
     }
 
     private String getForm() {

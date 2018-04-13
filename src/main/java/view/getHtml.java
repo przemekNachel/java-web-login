@@ -1,3 +1,5 @@
+package view;
+
 public class getHtml {
     public static String html = "<html><body>" +
             "<form method=\"POST\">\n" +

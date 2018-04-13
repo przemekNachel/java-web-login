@@ -1,9 +1,11 @@
+package dao;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public abstract class SqliteDao {
+abstract class SqliteDao {
 
     private DatabaseConnection connection = DatabaseConnection.getInstance();
 
