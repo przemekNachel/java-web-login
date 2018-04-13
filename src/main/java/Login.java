@@ -24,6 +24,7 @@ public class Login implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
+        System.out.println(httpExchange.getRequestURI().toString());
         this.logged = false;
         this.sessionDao = new SessionDao();
         this.userDao = new UserDao();
