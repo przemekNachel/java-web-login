@@ -8,7 +8,6 @@ import java.io.*;
 import java.net.HttpCookie;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Map;
 
 import dao.*;
 import model.*;
@@ -46,8 +45,7 @@ public class Login implements HttpHandler {
 
     private void makeResponse() throws Exception{
         if (requestMethod.equals("POST")) {
-            tryLogin();
-            if (logged) {
+            if (tryLogin()) {
                 response = "<script language=\"JavaScript\" type=\"text/javascript\">location.href=\"/\"</script>";
             }
         } else if (requestMethod.equals("GET")) {
@@ -60,18 +58,18 @@ public class Login implements HttpHandler {
         }
     }
 
-
-    private void tryLogin() throws Exception {
-        Map<String, String> formData = httpDao.getFormData();
-        String username = formData.get("username");
-        if (userDao.getUserByUsername(username, formData.get("password")) != null) {
-            session = new Session(username);
+    private boolean tryLogin() throws Exception {
+        boolean logged = false;
+        User user = userDao.getUserByFormData(httpDao.getFormData());
+        if (user != null) {
+            session = new Session(user.getUsername());
             httpDao.setHttpCookie(session);
             sessionDao.addSession(session);
             logged = true;
         } else {
             response = getForm() + "Bad username or password";
         }
+        return logged;
     }
 
     private boolean sessionIsValid() throws SQLException {

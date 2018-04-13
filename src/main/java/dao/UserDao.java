@@ -1,9 +1,11 @@
 package dao;
 
 import model.Session;
+import model.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class UserDao extends SqliteDao {
 
@@ -13,15 +15,13 @@ public class UserDao extends SqliteDao {
         sendQuery(query, placeholderStrings);
     }
 
-    public String getUserByUsername(String username, String password) throws SQLException {
+    public User getUserByFormData(Map<String, String> formData) throws SQLException {
         String query = "SELECT * FROM Users WHERE UserName = ? AND Password = ?";
-        String[] placeholderStrings = {username, password};
+        String[] placeholderStrings = {formData.get("username"), formData.get("password")};
         String[] columns = {"Username"};
         ArrayList<ArrayList<String>> usersData = sendQuery(query, placeholderStrings, columns);
-        Session session = null;
         if (usersData.size() > 0) {
-            ArrayList<String> userData = usersData.get(0);
-            return userData.get(0);
+            return new User(usersData.get(0).get(0));
         }
         return null;
     }
