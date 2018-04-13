@@ -10,8 +10,8 @@ public class SessionDao extends SqliteDao {
         String[] placeholderStrings = {
                 session.getSessionId(),
                 session.getUserName(),
-                session.getExpireDate().toString(),
                 session.getCreateDate().toString(),
+                session.getExpireDate().toString(),
                 session.getLastAccessDate().toString()};
         sendQuery(query, placeholderStrings);
     }

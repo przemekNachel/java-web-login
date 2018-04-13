@@ -39,11 +39,11 @@ public class Login implements HttpHandler {
             getFormData();
             tryLogin();
             if (sessionUnexpired()) {
-                response = "Hello " + session.getUserName() + "Your session ID: " + session.getSessionId();
+                response = "Hello " + session.getUserName() + " Your session ID: " + session.getSessionId();
             }
         } else if (requestMethod.equals("GET")) {
             if (sessionUnexpired()) {
-                response = "Hello " + session.getUserName() + "Your session ID: " + session.getSessionId();
+                response = "Hello " + session.getUserName() + " Your session ID: " + session.getSessionId();
             } else {
                 response = getForm();
             }
