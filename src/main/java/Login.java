@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.*;
 import java.net.HttpCookie;
 import java.net.URLDecoder;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,20 +26,24 @@ public class Login implements HttpHandler {
         this.httpExchange = httpExchange;
         this.requestMethod = httpExchange.getRequestMethod();
 
-        makeResponse();
+        try {
+            makeResponse();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         sendResponse();
     }
 
-    private void makeResponse() throws IOException{
+    private void makeResponse() throws Exception{
         if (requestMethod.equals("POST")) {
             getFormData();
             tryLogin();
             if (sessionUnexpired()) {
-                response = "Your session ID: " + session.getSessionId();
+                response = "Hello " + session.getUserName() + "Your session ID: " + session.getSessionId();
             }
         } else if (requestMethod.equals("GET")) {
             if (sessionUnexpired()) {
-                response = "Your session ID: " + session.getSessionId();
+                response = "Hello " + session.getUserName() + "Your session ID: " + session.getSessionId();
             } else {
                 response = getForm();
             }
@@ -47,7 +52,7 @@ public class Login implements HttpHandler {
     }
 
 
-    private void tryLogin() {
+    private void tryLogin() throws SQLException {
         String correctUsername = "tadek";
         String correctPassword = "przemek";
 
@@ -74,7 +79,7 @@ public class Login implements HttpHandler {
         }
     }
 
-    private boolean sessionUnexpired() {
+    private boolean sessionUnexpired() throws SQLException {
         getCookie();
         if (cookie != null) {
             session = sessionDao.getSessionById(cookie.getValue());
