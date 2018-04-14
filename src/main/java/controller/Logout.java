@@ -3,6 +3,7 @@ package controller;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Logout extends Service {
 
@@ -13,6 +14,11 @@ public class Logout extends Service {
 
     @Override
     void handleGetFromValidatedUser() {
+        try {
+            deleteSession();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         redirectTo("/login");
     }
 

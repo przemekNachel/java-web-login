@@ -80,6 +80,12 @@ public abstract class Service implements HttpHandler {
         response = "<script language=\"JavaScript\" type=\"text/javascript\">location.href=\"" + address + "\"</script>";
     }
 
+    void deleteSession() throws SQLException{
+        if (session != null) {
+            sessionDao.deleteSession(session);
+        }
+    }
+
     private boolean isLogged() throws SQLException, IOException{
         boolean isLogged = false;
         user = userDao.getUserByFormData(httpDao.getFormData());

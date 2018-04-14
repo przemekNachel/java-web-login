@@ -17,13 +17,9 @@ public class getHtml {
 
     public static String mainPage(String username, String sessionId) {
         return "<html><body>Hello " + username + " Your session ID: " + sessionId +
-                "<form action=\"logout()\">" +
-                "    <input type=\"submit\" value=\"Log out\" />" +
-                "</form>" +
-                "<script>function logout() {" +
-                    "document.cookie = \'sessionId=" + sessionId + "\' + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';" +
-                "location.href=\"/logout\";" +
-                "}<script>";
+                "<form action=\"/logout/\">" +
+                "    <button type=submit>Log out</button>" +
+                "</form></body></html>";
     }
 }
 
