@@ -2,16 +2,16 @@ package controller;
 
 import view.getHtml;
 
-public class Login extends Service {
+public class Dashboard extends Service {
 
     @Override
     void handleGetFromValidatedUser() {
-        redirectTo("/");
+        setResponse(getHtml.mainPage(getSession().getUserName(), getSession().getSessionId()));
     }
 
     @Override
     void handleGetFromUnvalidatedUser() {
-        setResponse(getHtml.form);
+        redirectTo("/login");
     }
 
     @Override

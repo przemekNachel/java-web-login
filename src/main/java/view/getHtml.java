@@ -13,12 +13,10 @@ public class getHtml {
             "</form> " +
             "</body></html>";
 
-    public static String refreshPage = "<script language=\"JavaScript\" type=\"text/javascript\">location.href=\"/\"</script>";
-
     public static String badCredentials = form + "Bad username or password";
 
-    public static String mainPage(String username) {
-        return "Hello " + username;
+    public static String mainPage(String username, String sessionId) {
+        return "Hello " + username + " Your session ID: " + sessionId;
     }
 }
 
