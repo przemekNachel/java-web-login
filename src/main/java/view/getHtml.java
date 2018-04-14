@@ -1,15 +1,25 @@
 package view;
 
 public class getHtml {
-    public static String html = "<html><body>" +
+    public static String form = "<html><body>" +
             "<form method=\"POST\">\n" +
-            "  First name:<br>\n" +
+            "  username:<br>\n" +
             "  <input type=\"text\" name=\"username\" required=\"required\">\n" +
             "  <br>\n" +
-            "  Last name:<br>\n" +
+            "  password:<br>\n" +
             "  <input type=\"text\" name=\"password\" required=\"required\">\n" +
             "  <br><br>\n" +
             "  <input type=\"submit\" value=\"Sign in\">\n" +
             "</form> " +
             "</body></html>";
+
+    public static String refreshPage = "<script language=\"JavaScript\" type=\"text/javascript\">location.href=\"/\"</script>";
+
+    public static String badCredentials = form + "Bad username or password";
+
+    public static String mainPage(String username) {
+        return "Hello " + username;
+    }
 }
+
+

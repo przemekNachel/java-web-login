@@ -22,14 +22,13 @@ public class Login implements HttpHandler {
     private String requestMethod;
     private String response;
     private Session session;
-    private boolean logged;
+
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         System.out.println(httpExchange.getRequestURI().toString());
         this.httpDao = new HttpDao(httpExchange);
 
-        this.logged = false;
         this.sessionDao = new SessionDao();
         this.userDao = new UserDao();
         this.httpExchange = httpExchange;
@@ -45,20 +44,22 @@ public class Login implements HttpHandler {
 
     private void makeResponse() throws Exception{
         if (requestMethod.equals("POST")) {
-            if (tryLogin()) {
-                response = "<script language=\"JavaScript\" type=\"text/javascript\">location.href=\"/\"</script>";
+            if (isLogged()) {
+                response = getHtml.refreshPage;
+            } else {
+                response = getHtml.badCredentials;
             }
         } else if (requestMethod.equals("GET")) {
             if (sessionIsValid()) {
-                response = "Hello " + session.getUserName() + " Your session ID: " + session.getSessionId();
+                response = getHtml.mainPage(session.getUserName() + " Your session ID: " + session.getSessionId());;
             } else {
-                response = getForm();
+                response = getHtml.form;
             }
 
         }
     }
 
-    private boolean tryLogin() throws Exception {
+    private boolean isLogged() throws Exception {
         boolean logged = false;
         User user = userDao.getUserByFormData(httpDao.getFormData());
         if (user != null) {
@@ -66,8 +67,6 @@ public class Login implements HttpHandler {
             httpDao.setHttpCookie(session);
             sessionDao.addSession(session);
             logged = true;
-        } else {
-            response = getForm() + "Bad username or password";
         }
         return logged;
     }
@@ -78,10 +77,6 @@ public class Login implements HttpHandler {
             session = sessionDao.getSessionById(cookie.getValue());
         }
         return session != null && session.getExpireDate().isAfter(LocalDateTime.now());
-    }
-
-    private String getForm() {
-        return getHtml.html;
     }
 
     private void sendResponse() throws IOException {
