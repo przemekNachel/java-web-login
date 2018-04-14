@@ -19,6 +19,12 @@ public class SessionDao extends SqliteDao {
         sendQuery(query, placeholderStrings);
     }
 
+    public void updateLastAccessDate(Session session) throws SQLException {
+        String query = "UPDATE Sessions SET LastAccessDate = ? WHERE SessionId = ?";
+        String[] placeholderStrings = {LocalDateTime.now().toString(), session.getSessionId()};
+        sendQuery(query, placeholderStrings);
+    }
+
     public Session getSessionById(String cookie) throws SQLException {
         String query = "SELECT * FROM Sessions WHERE SessionId = ?";
         String[] placeholderStrings = {cookie};
