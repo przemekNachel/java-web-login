@@ -7,7 +7,7 @@ public class getHtml {
             "  <input type=\"text\" name=\"username\" required=\"required\">\n" +
             "  <br>\n" +
             "  password:<br>\n" +
-            "  <input type=\"text\" name=\"password\" required=\"required\">\n" +
+            "  <input type=\"password\" name=\"password\" required=\"required\">\n" +
             "  <br><br>\n" +
             "  <input type=\"submit\" value=\"Sign in\">\n" +
             "</form> " +
