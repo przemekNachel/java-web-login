@@ -15,6 +15,7 @@ public class  App {
             server = HttpServer.create(new InetSocketAddress(8000), 0);
             server.createContext("/", new Dashboard());
             server.createContext("/login", new Login());
+            server.createContext("/logout", new Logout());
             server.setExecutor(null);
             server.start();
         } catch (IOException e) {

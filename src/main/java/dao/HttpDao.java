@@ -18,17 +18,21 @@ public class HttpDao {
 
     public HttpDao(HttpExchange httpExchange) {
         this.httpExchange = httpExchange;
-        this.httpCookie = (httpExchange.getRequestHeaders().getFirst("Cookie") != null) ?
+    }
+
+    public HttpCookie getHttpCookie() {
+        return (httpExchange.getRequestHeaders().getFirst("Cookie") != null) ?
                 HttpCookie.parse(httpExchange.getRequestHeaders().getFirst("Cookie")).get(0) :
                 null;
     }
 
-    public HttpCookie getHttpCookie() {
-        return httpCookie;
-    }
-
     public void setHttpCookie(Session session) {
         httpCookie = new HttpCookie("sessionId", session.getSessionId());
+        httpExchange.getResponseHeaders().add("Set-Cookie", httpCookie.toString());
+    }
+
+    public void setCookieToNull() {
+        httpCookie = new HttpCookie("sessionId", "null");
         httpExchange.getResponseHeaders().add("Set-Cookie", httpCookie.toString());
     }
 

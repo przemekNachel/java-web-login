@@ -65,7 +65,7 @@ public abstract class Service implements HttpHandler {
                 handleGetFromUnvalidatedUser();
             }
         } else if (requestMethod.equals("POST")) {
-            if (isLogged()) {
+            if (sessionIsValid() || isLogged()) {
                 sessionDao.updateLastAccessDate(session);
                 handlePostFromValidatedUser();
             } else {
@@ -94,13 +94,14 @@ public abstract class Service implements HttpHandler {
 
     private boolean sessionIsValid() throws SQLException {
         HttpCookie cookie = httpDao.getHttpCookie();
+        session = null;
         if (cookie != null) {
             session = sessionDao.getSessionById(cookie.getValue());
         }
         return session != null && session.getExpireDate().isAfter(LocalDateTime.now());
     }
 
-   private void sendResponse(String response) throws IOException{
+    private void sendResponse(String response) throws IOException{
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());

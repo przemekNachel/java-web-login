@@ -1,10 +1,12 @@
 package dao;
 
 import model.Session;
+import model.User;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class SessionDao extends SqliteDao {
 
@@ -16,6 +18,12 @@ public class SessionDao extends SqliteDao {
                 session.getCreateDate().toString(),
                 session.getExpireDate().toString(),
                 session.getLastAccessDate().toString()};
+        sendQuery(query, placeholderStrings);
+    }
+
+    public void deleteSession(Session session) throws SQLException {
+        String query = "DELETE FROM Sessions WHERE SessionId = ?";
+        String[] placeholderStrings = {session.getSessionId()};
         sendQuery(query, placeholderStrings);
     }
 
