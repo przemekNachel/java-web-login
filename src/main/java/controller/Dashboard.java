@@ -1,12 +1,18 @@
 package controller;
 
-import view.getHtml;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 public class Dashboard extends Service {
 
+    private JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/index.twig");
+    private JtwigModel model = JtwigModel.newModel();
+
     @Override
     void handleGetFromValidatedUser() {
-        setResponse(getHtml.mainPage(getSession().getUserName(), getSession().getSessionId()));
+        model.with("username" , getSession().getUserName());
+        model.with("session_id" , getSession().getSessionId());
+        setResponse(template.render(model));
     }
 
     @Override
@@ -21,6 +27,6 @@ public class Dashboard extends Service {
 
     @Override
     void handlePostFromUnvalidatedUser() {
-        setResponse(getHtml.badCredentials);
+        redirectTo("/login");
     }
 }

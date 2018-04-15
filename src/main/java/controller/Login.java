@@ -1,8 +1,14 @@
 package controller;
 
-import view.getHtml;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 public class Login extends Service {
+
+    private static final String BAD_CREDENTIALS = "Bad username or password";
+
+    private JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/login.twig");
+    private JtwigModel model = JtwigModel.newModel();
 
     @Override
     void handleGetFromValidatedUser() {
@@ -11,7 +17,8 @@ public class Login extends Service {
 
     @Override
     void handleGetFromUnvalidatedUser() {
-        setResponse(getHtml.form);
+        model.with("message" , "");
+        setResponse(template.render(model));
     }
 
     @Override
@@ -21,6 +28,7 @@ public class Login extends Service {
 
     @Override
     void handlePostFromUnvalidatedUser() {
-        setResponse(getHtml.badCredentials);
+        model.with("message" , BAD_CREDENTIALS);
+        setResponse(template.render(model));
     }
 }
