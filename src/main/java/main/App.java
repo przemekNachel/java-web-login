@@ -16,6 +16,7 @@ public class  App {
             server.createContext("/", new Dashboard());
             server.createContext("/login", new Login());
             server.createContext("/logout", new Logout());
+            server.createContext("/static", new Static());
             server.setExecutor(null);
             server.start();
         } catch (IOException e) {
