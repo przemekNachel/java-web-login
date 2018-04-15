@@ -1,3 +1,44 @@
 body {
-    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
+    background-color: #221f21;
 }
+
+#rectangle{
+    position: relative;
+    font-family: "DejaVu Sans", serif;
+    color: #0d0c0e;
+    display: flex;
+    text-align: center;
+    border: 11px solid #19171a;
+    justify-content: center;
+    width: 250px;
+    background-color: #514b51;
+    top: 50%;
+    transform: translateY(50%);
+}
+
+#button{
+    border-color: #19171a;
+}
+
+#content{
+    font-family: "DejaVu Sans", serif;
+    color: #4e4e4e;
+    font-size: x-large;
+}
+
+input{
+    width: 70%;
+    margin: 0 auto;
+    background-color: #291f2f;
+    border: solid #19171a;
+}
+
+p{
+    font-size: small;
+}
+

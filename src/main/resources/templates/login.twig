@@ -4,14 +4,19 @@
     <link rel="stylesheet" type="text/css" href="static/css/style.css">
 </head>
 <body>
+<div id="rectangle">
     <form method="POST">
-        <label for="username">username</label>
-        <input type="text" name="username" required="required"><br/>
-        <label for="password">password</label>
-        <input type="password" name="password" required="required">
+        <br/>
+        <label for="username">username</label><br/>
+        <input type="text" id="username" name="username" required="required"><br/>
+        <label for="password">password</label><br/>
+        <input type="password" id="password" name="password" required="required"><br/>
         <br/><br/>
-        <input type="submit" value="Sign in">
+        <input id="button" type="submit" value="Sign in">
+
+        <p>{{ message }}</p>
     </form>
-    <p>{{ message }}</p>
+</div>
+
 </body>
 </html>

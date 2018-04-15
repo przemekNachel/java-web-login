@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="static/css/style.css">
-    </head>
-    <body>
-        <p>Hello {{ username }} Your session ID: {{ session_id }}</p>
-        <form action="/logout">
-            <button type=submit>Log out</button>
-        </form>
-    </body>
+<head>
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+</head>
+<body>
+<div id="content">
+    <p>Hello {{ username }} Your session ID: {{ session_id }}</p>
+</div>
+<div>
+    <form id="content" action="/logout">
+        <button id="button" type=submit>Log out</button>
+    </form>
+</div>
+</body>
 </html>
