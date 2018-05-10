@@ -25,13 +25,13 @@ public class HttpDao {
     public HttpCookie getHttpCookie() {
         HttpCookie cookie = null;
         String cookiesHeader = httpExchange.getRequestHeaders().getFirst("Cookie");
-        List<HttpCookie> cookieList = getAllCookies(cookiesHeader);
-        if (cookieList != null) {
-            for (HttpCookie cookieFromList : cookieList) {
-                if (cookieFromList.getName().equals("sessionId")) {
-                    cookie = cookieFromList;
+        if (cookiesHeader != null) {
+            List<HttpCookie> cookieList = getAllCookies(cookiesHeader);
+                for (HttpCookie cookieFromList : cookieList) {
+                    if (cookieFromList.getName().equals("sessionId")) {
+                        cookie = cookieFromList;
+                    }
                 }
-            }
         }
         return cookie;
     }
