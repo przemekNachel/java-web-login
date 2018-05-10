@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpCookie;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HttpDao {
@@ -21,9 +23,27 @@ public class HttpDao {
     }
 
     public HttpCookie getHttpCookie() {
-        return (httpExchange.getRequestHeaders().getFirst("Cookie") != null) ?
-                HttpCookie.parse(httpExchange.getRequestHeaders().getFirst("Cookie")).get(0) :
-                null;
+        HttpCookie cookie = null;
+        String cookiesHeader = httpExchange.getRequestHeaders().getFirst("Cookie");
+        List<HttpCookie> cookieList = getAllCookies(cookiesHeader);
+        if (cookieList != null) {
+            for (HttpCookie cookieFromList : cookieList) {
+                if (cookieFromList.getName().equals("sessionId")) {
+                    cookie = cookieFromList;
+                }
+            }
+        }
+        return cookie;
+    }
+
+    public static List<HttpCookie> getAllCookies(String cookiesHeader) {
+        List<HttpCookie> cookiesList = new ArrayList<>();
+        String[] singleCookie = cookiesHeader.split(";");
+        for (String c : singleCookie) {
+            List<HttpCookie> l = HttpCookie.parse(c);
+            cookiesList.add(l.get(0));
+        }
+        return cookiesList;
     }
 
     public void setHttpCookie(Session session) {
