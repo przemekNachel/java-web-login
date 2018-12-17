@@ -47,8 +47,7 @@ public class HttpDao {
     }
 
     public void setHttpCookie(Session session) {
-        httpCookie = new HttpCookie("sessionId", session.getSessionId());
-        httpExchange.getResponseHeaders().add("Set-Cookie", httpCookie.toString());
+        httpExchange.getResponseHeaders().add("Set-Cookie", "sessionId=" + session.getSessionId() + ";Max-Age=604800");
     }
 
     public void setCookieToNull() {
