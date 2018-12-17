@@ -8,9 +8,7 @@
     <p>Hello {{ username }} Your session ID: {{ session_id }}</p>
 </div>
 <div>
-    <form id="content" action="/logout">
-        <button id="button" type=submit>Log out</button>
-    </form>
+    <button id="button" onclick="document.cookie = 'sessionId=; expires=Thu, 01 Jan 1970 00:00:00 UTC;'; location.href='/logout'">Log out</button>
 </div>
 </body>
 </html>
